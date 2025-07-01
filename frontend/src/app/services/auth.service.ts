@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment.test';
 
 @Injectable({
@@ -37,5 +37,13 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+  }
+
+  checkUsernameExists(username: string): Observable<boolean> {
+    return this.http
+      .get<{
+        exists: boolean;
+      }>(`${this.apiUrl}/auth/check-username`, { params: { username } })
+      .pipe(map((response) => response.exists));
   }
 }

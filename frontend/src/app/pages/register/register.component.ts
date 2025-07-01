@@ -4,10 +4,20 @@ import {
   Validators,
   AbstractControl,
   ReactiveFormsModule,
+  AsyncValidatorFn,
+  ValidationErrors,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
+import { Observable, of } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  map,
+  first,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +38,14 @@ export class RegisterComponent {
   ) {
     this.registerForm = this.fb.group(
       {
-        username: ['', Validators.required],
+        username: [
+          '',
+          {
+            validators: [Validators.required],
+            asyncValidators: [this.usernameExistsValidator(this.auth)],
+            updateOn: 'blur',
+          },
+        ],
         password: ['', Validators.required],
         confirmPassword: ['', Validators.required],
       },
@@ -65,5 +82,20 @@ export class RegisterComponent {
           err.error?.message || 'Registration failed. Please try again.';
       },
     });
+  }
+
+  usernameExistsValidator(authService: AuthService): AsyncValidatorFn {
+    return (control): Observable<ValidationErrors | null> => {
+      if (!control.value) {
+        return of(null);
+      }
+      return of(control.value).pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((username) => authService.checkUsernameExists(username)),
+        map((exists) => (exists ? { usernameTaken: true } : null)),
+        first(),
+      );
+    };
   }
 }
