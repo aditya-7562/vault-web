@@ -1,6 +1,4 @@
-# Meety
-
-**Meety** is a collaborative web app designed to simplify planning and coordination within small private groups.
+# Vault Hub
 
 This repository contains both backend and frontend code for local development. The backend is powered by **Spring Boot**, the frontend is built with **Angular**, and a **PostgreSQL** database is used for persistent data storage.
 
@@ -8,11 +6,13 @@ This repository contains both backend and frontend code for local development. T
 
 ---
 
-## Project Idea
+**Vault Hub** is the central entry point for all services in the Vault Web ecosystem.  
+It provides a secure and private dashboard to access:
 
-**Meety** aims to centralize the tools friends use to organize group activities — combining communication, event coordination, and cost management into a single lightweight platform.
-
-The app is intended for everyday use and helps users avoid switching between multiple apps like messengers, poll tools, and finance splitters.
+- 🔐 A built-in password manager
+- ☁️ Your private file cloud (via `vault-cloud`)
+- 💬 Internal chats and collaboration tools
+- 🧑‍💻 User and session management
 
 ---
 
