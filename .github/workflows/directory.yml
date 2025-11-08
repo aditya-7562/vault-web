@@ -23,21 +23,10 @@ jobs:
           extensions: ".java,.html,.ts,.scss"
           show-extensions: true
 
-      - name: Checkout or create Dependabot-style branch
+      - name: Commit changes if there are any
         run: |
           git config --global user.name "$GITHUB_ACTOR"
           git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
-          BRANCH_NAME=dependabot/directory-update
-
-          if git show-ref --verify --quiet refs/heads/$BRANCH_NAME; then
-            git checkout $BRANCH_NAME
-          else
-            git checkout -b $BRANCH_NAME
-          fi
-
-      - name: Commit changes if there are any
-        run: |
           git add DIRECTORY.md
           if ! git diff --cached --quiet; then
             git commit -m "Update DIRECTORY.md"
