@@ -52,7 +52,7 @@
 
     <div
       class="text-red-600 text-sm mt-1"
-      *ngIf="submitted && registerForm.errors?.['mismatch']"
+      *ngIf="(submitted || f['confirmPassword'].touched) && registerForm.errors?.['mismatch']"
     >
       Passwords do not match.
     </div>
