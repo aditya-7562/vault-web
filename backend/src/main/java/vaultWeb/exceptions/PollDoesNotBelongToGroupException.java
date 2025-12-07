@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Thrown when a user tries to perform poll activities for a groupId that doesn't belong to the
  * respective poll.
  */
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class PollDoesNotBelongToGroupException extends RuntimeException {
 
   /**

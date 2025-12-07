@@ -94,17 +94,17 @@ public class GlobalExceptionHandler {
         .body("Chat error: " + ex.getMessage());
   }
 
-  /** Handles PollDoesNotBelongToGroupException and returns 400 Bad Request. */
+  /** Handles PollDoesNotBelongToGroupException and returns 404 Not Found. */
   @ExceptionHandler(PollDoesNotBelongToGroupException.class)
   public ResponseEntity<String> handlePollDoesNotBelongToGroup(
       PollDoesNotBelongToGroupException ex) {
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Poll error: " + ex.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Poll error: " + ex.getMessage());
   }
 
-  /** Handles PollOptionNotFoundException and returns 400 Bad Request. */
+  /** Handles PollOptionNotFoundException and returns 404 Not Found. */
   @ExceptionHandler(PollOptionNotFoundException.class)
   public ResponseEntity<String> handlePollOptionNotFound(PollOptionNotFoundException ex) {
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Poll error: " + ex.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Poll error: " + ex.getMessage());
   }
 
   /** Handles any other RuntimeException and returns 500 Internal Server Error. */

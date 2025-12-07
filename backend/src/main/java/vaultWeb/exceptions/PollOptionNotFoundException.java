@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Thrown when a user tries to perform poll activities for a optionId that doesn't exist in the
  * respective poll.
  */
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class PollOptionNotFoundException extends RuntimeException {
 
   /**
