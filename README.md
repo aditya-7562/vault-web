@@ -1,105 +1,111 @@
 # Vault Web
 
-**Vault Web** is a full-stack project combining a **Spring Boot** backend, an **Angular** frontend, and a **PostgreSQL** database for persistent data storage. It serves as the central entry point for all services in the Vault Web ecosystem, providing a secure and private dashboard for:
+**Vault Web** is the core project of the **Vault Web ecosystem**.  
+It is a full-stack application combining a **Spring Boot backend**, an **Angular frontend**, and a **PostgreSQL** database.
 
-- 💬 Internal chats and collaboration tools 
-- ☁️ Private file cloud (via `vault-cloud`)
-- 🧑‍💻 User and session management
+Vault Web acts as a **central dashboard** for a modular, self-hosted home server ecosystem. It provides a single entry point where multiple services are integrated into one secure web interface.
+
+---
+
+## What Vault Web Provides
+
+Vault Web is responsible for:
+
+- 💬 **Internal chats and collaboration tools**
+- 🧑‍💻 **User and session management**
+- 🔐 **Central authentication (JWT-based)**
+- 🧩 **Frontend integration of external services**
+
+Additional services are **not implemented directly in this repository**, but are embedded into the Vault Web frontend.
+
+For example, file storage and file management are provided by the **Cloud Page** service:  
+👉 https://github.com/Vault-Web/cloud-page
+
+---
 
 ## Project Structure
 
-- See [**DIRECTORY.md**](https://github.com/Vault-Web/vault-web/blob/main/DIRECTORY.md) for a full, generated project structure overview.  
-
-- View our [**Javadoc documentation**](https://vault-web.github.io/vault-web) for a complete backend API overview.
+- 📁 [**DIRECTORY.md**](https://github.com/Vault-Web/vault-web/blob/main/DIRECTORY.md) – generated project structure overview  
+- 📚 [**Javadoc**](https://vault-web.github.io/vault-web) – backend API documentation  
 
 ---
 
 ## Local Development
 
-The project uses Docker to quickly spin up a PostgreSQL database and pgAdmin instance. Make sure you have **Docker** and **Docker Compose** installed before you begin.
+Vault Web uses **Docker** for local development.
+
+### Requirements
+
+- Docker & Docker Compose  
+- Java 21+ (Java 24 supported)  
+- Node.js & npm  
 
 ---
 
-### 1. Clone the Repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/Vault-Web/vault-web.git
-```
+cd vault-web
+````
 
 ---
 
-### 2. Create a `.env` File
+## 2. Environment Configuration (`.env`)
 
-Before running the containers, create a file named `.env` in the root directory of the project and add the following environment variables:
+⚠️ **You do NOT need to create a `.env` file manually.**
+A `.env` file already exists in the repository.
 
-```env
-# PostgreSQL config
-DB_HOST=localhost
-DB_PORT=5432
-POSTGRES_USER=your_postgres_user
-POSTGRES_PASSWORD=your_postgres_password
-POSTGRES_DB=vaultdb
+You may adjust the values if needed, but make sure that:
 
-# pgAdmin config
-PGADMIN_DEFAULT_EMAIL=your_email@example.com
-PGADMIN_DEFAULT_PASSWORD=your_pgadmin_password
-```
-
-> 📝 Replace the values with your own settings.
-> Do **not** use sensitive production credentials during development.
+> **The database configuration in `.env` matches exactly with the backend `application.properties`.**
 
 ---
 
-### 3. Start Database and pgAdmin via Docker
+## 3. Start PostgreSQL and pgAdmin
 
 ```bash
 docker compose up -d
 ```
 
-This will start the following services:
-
-- **PostgreSQL** at `localhost:<DB_PORT>` (e.g. `5432`)
-- **pgAdmin** at [http://localhost:8081](http://localhost:8081)
-
-> You can access pgAdmin using the credentials you provided in the `.env` file.
+* PostgreSQL: `localhost:<DB_PORT>`
+* pgAdmin: [http://localhost:8081](http://localhost:8081)
 
 ---
 
-### 4. Backend Configuration (Spring Boot)
+## 4. Backend (Spring Boot)
 
-The backend runs on port `8080` and connects to the database with the same values defined in `.env`.
+Configuration file:
+`backend/src/main/resources/application.properties`
 
-These are the values set in the [application properties](backend/src/main/resources/application.properties):
+Ensure the database values match the `.env` file.
 
-> ⚠️ Make sure the values for database URL, username, password, and port match exactly with those in your `.env` file.
-> Otherwise, the backend will not be able to connect to the database started by Docker.
-
-To run the backend:
+Start the backend:
 
 ```bash
 cd backend
 ./mvnw spring-boot:run
 ```
 
-Then visit:
-
-- App API: [http://localhost:8080](http://localhost:8080)
-- Swagger UI: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+* API: [http://localhost:8080](http://localhost:8080)
+* Swagger UI: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
 
 ---
 
-### 5. Start the Frontend (Angular)
-
-Install dependencies and start the Angular development server:
+## 5. Frontend (Angular)
 
 ```bash
 cd frontend
 npm install
-ng s
+ng serve
 ```
 
-Then open [http://localhost:4200](http://localhost:4200) in your browser.
+Open:
+👉 [http://localhost:4200](http://localhost:4200)
 
-## 📫 Questions?
+---
 
-Feel free to open an issue.
+## Notes
+
+This project is intended for **self-hosted and home-server environments**.
+Contributions and feedback are welcome.
